@@ -116,6 +116,7 @@ def move2(pos,dir):
         steps+=1
 
 def check_loop():
+    history={}
     gx,gy = start[0],start[1]
     gua = data[gy][gx]
     count = 0
@@ -124,8 +125,9 @@ def check_loop():
         gx,gy,steps = move2([gx,gy],dir)
         gua = next_guard.get(gua)
         count+=steps
-        if count > max_moves:
+        if ((gx,gy) in history and history[(gx,gy)] == gua) or count > max_moves:
             return True
+        history[(gx, gy)] = gua
     return False
 
 loop_count=0
